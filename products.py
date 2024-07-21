@@ -3,7 +3,7 @@ class Product:
         self.name = name
         self.price = price
         self.quantity = quantity
-        self. active = True
+        self.active = True
 
     def get_quantity(self):
         if not type(self.quantity) is int:
@@ -33,7 +33,7 @@ class Product:
         self.active = False
 
     def show(self):
-        print (f"{self.name}, Price: {self.price}, Quantity: {self.quantity}")
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
     def buy(self, quantity):
         if not type(quantity) is int:
