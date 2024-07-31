@@ -19,8 +19,10 @@ class Store:
     def get_all_products(self):
         active_products = []
         for item in self.list_of_products:
-            active_products.append(item)
+            if item.active:
+                active_products.append(item)
         return active_products
+
 
     def order(self, shopping_list):
         total_price = 0
@@ -33,22 +35,8 @@ class Store:
                 else:
                     return price
             else:
-                return f"{product} is not active"
+                return f"{product}is not active"
 
-product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
-                products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                products.Product("Google Pixel 7", price=500, quantity=250),
-               ]
-
-"""""
-store = Store(product_list)
-print(store.list_of_products)
-for product in store.list_of_products:
-    product.show()
-products = store.get_all_products()
-print(store.get_total_quantity())
-print(store.order([(products[0], 1), (products[1], 2)]))
-"""""
 
 
 
