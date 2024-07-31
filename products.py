@@ -40,10 +40,8 @@ class Product:
             if self.quantity >= quantity:
                 self.quantity -= quantity
                 total_price = self.price * quantity
-            if self.quantity <= 0:
-                self.deactivate()
+                if self.quantity <= 0:
+                    self.deactivate()
                 return total_price
-            else:
-                return f"Sorry, There are just {self.quantity} {self.name} in inventory"
         else:
             print("This is not an int")
