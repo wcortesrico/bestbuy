@@ -36,16 +36,14 @@ class Product:
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
     def buy(self, quantity):
-        if not type(quantity) is int:
-            raise TypeError("The value is not a float")
-        try:
+        if isinstance(quantity, int):
             if self.quantity >= quantity:
                 self.quantity -= quantity
                 total_price = self.price * quantity
+            if self.quantity <= 0:
+                self.deactivate()
                 return total_price
             else:
                 return f"Sorry, There are just {self.quantity} {self.name} in inventory"
-        except TypeError as e:
-            print(e)
-
-
+        else:
+            print("This is not an int")

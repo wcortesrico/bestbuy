@@ -19,23 +19,21 @@ class Store:
     def get_all_products(self):
         active_products = []
         for item in self.list_of_products:
-            if item.active:
-                active_products.append(item)
+            active_products.append(item)
         return active_products
-
 
     def order(self, shopping_list):
         total_price = 0
         for product, qty in shopping_list:
-            if not type(qty) is int:
-                raise TypeError("The second value is not an integer")
-            try:
+            if product.active:
                 price = product.buy(qty)
-                total_price += price
-            except TypeError as e:
-                print(e)
-        return total_price
-
+                if isinstance(price, float):
+                    total_price += price
+                    return total_price
+                else:
+                    return price
+            else:
+                return f"{product} is not active"
 
 product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
                 products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
