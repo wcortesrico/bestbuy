@@ -41,14 +41,24 @@ def start(store_object):
                     keep_order = False
                     break
                 elif option_order == "1":
-                    shopping_list.append((products[0], qty_order))
-                    print("Item added to list\n")
+                    if qty_order <= products[0].quantity:
+                        shopping_list.append((products[0], qty_order))
+                        print("Item added to list\n")
+                    else:
+                        print(f"Sorry, There are just {products[0].quantity} {products[0].name} in inventory")
                 elif option_order == "2":
-                    shopping_list.append((products[1], qty_order))
-                    print("Item added to list\n")
+                    if qty_order <= products[1].quantity:
+                        shopping_list.append((products[1], qty_order))
+                        print("Item added to list\n")
+                    else:
+                        print(f"Sorry, There are just {products[1].quantity} {products[1].name} in inventory")
                 elif option_order == "3":
-                    shopping_list.append((products[2], qty_order))
-                    print("Item added to list\n")
+                    if qty_order <= products[2].quantity:
+                        shopping_list.append((products[2], qty_order))
+                        print("Item added to list\n")
+                    else:
+                        print(f"Sorry, There are just {products[1].quantity} {products[1].name} in inventory")
+
             total_price = best_buy.order(shopping_list)
             print(f"Order made! total payment {total_price}")
         elif option_number == "4":
