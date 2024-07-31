@@ -11,7 +11,7 @@ best_buy = store.Store(product_list)
 def print_list_products(object):
     n = 1
     print("------")
-    for product in object.list_of_products:
+    for product in object.get_all_products():
         print(f"{n}. {product.show()}")
         n += 1
     print("------")
@@ -24,40 +24,32 @@ def start(store_object):
         if option_number == "1":
             print_list_products(store_object)
         elif option_number == "2":
-            print(f"Total of {best_buy.get_total_quantity()} items in store")
+            print(f"Total of {store_object.get_total_quantity()} items in store")
         elif option_number == "3":
-            print_list_products(store_object)
+            print("")
+            products = store_object.get_all_products()
+            n = 1
+            for product in products:
+                print(f"{n}. {product.show()}")
+                n += 1
             print("When you want to finish the order, enter empty text")
             keep_order = True
             shopping_list = []
-            products = best_buy.get_all_products()
             while keep_order:
                 try:
-                    option_order = input("Which product # do you want? ")
+                    option_order = input("\nWhich product # do you want? ")
                     qty_order = int(input("What amount do you want? "))
                 except ValueError as e:
                     keep_order = False
                 if option_order == "":
                     keep_order = False
                     break
-                elif option_order == "1":
-                    if qty_order <= products[0].quantity:
-                        shopping_list.append((products[0], qty_order))
-                        print("Item added to list\n")
-                    else:
-                        print(f"Sorry, There are just {products[0].quantity} {products[0].name} in inventory")
-                elif option_order == "2":
-                    if qty_order <= products[1].quantity:
-                        shopping_list.append((products[1], qty_order))
-                        print("Item added to list\n")
-                    else:
-                        print(f"Sorry, There are just {products[1].quantity} {products[1].name} in inventory")
-                elif option_order == "3":
-                    if qty_order <= products[2].quantity:
-                        shopping_list.append((products[2], qty_order))
-                        print("Item added to list\n")
-                    else:
-                        print(f"Sorry, There are just {products[1].quantity} {products[1].name} in inventory")
+                index = int(option_order) - 1
+                if qty_order <= products[index].quantity:
+                    shopping_list.append((products[index], qty_order))
+                    print("Item added to list\n")
+                else:
+                    print(f"Sorry, There are just {products[index].quantity} {products[index].name} in inventory")
 
             total_price = best_buy.order(shopping_list)
             print(f"Order made! total payment {total_price}")
