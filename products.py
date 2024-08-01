@@ -1,9 +1,21 @@
 class Product:
     def __init__(self, name, price, quantity):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.active = True
+        if name == "":
+            raise ValueError("Name cannot be empty")
+        else:
+            self.name = name
+        if price < 0:
+            raise ValueError("Price cannot be less than cero")
+        else:
+            self.price = price
+        if quantity == 0:
+            self.active = False
+            self.quantity = quantity
+        elif quantity < 0:
+            raise ValueError("Quantity cannot be negative")
+        else:
+            self.active = True
+            self.quantity = quantity
 
     def get_quantity(self):
         if not type(self.quantity) is int:
@@ -37,7 +49,9 @@ class Product:
 
     def buy(self, quantity):
         if isinstance(quantity, int):
-            if self.quantity >= quantity:
+            if self.quantity < quantity:
+                raise ValueError("There are not enough items to buy")
+            else:
                 self.quantity -= quantity
                 total_price = self.price * quantity
                 if self.quantity <= 0:
