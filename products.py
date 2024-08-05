@@ -52,10 +52,54 @@ class Product:
             if self.quantity < quantity:
                 raise ValueError("There are not enough items to buy")
             else:
-                self.quantity -= quantity
                 total_price = self.price * quantity
+                self.quantity -= quantity
                 if self.quantity <= 0:
                     self.deactivate()
                 return total_price
         else:
             print("This is not an int")
+
+class NonStockedProduct(Product):
+    def __init__(self, name, price, quantity):
+        super().__init__(name, price, quantity)
+        quantity = 0
+        self.quantity = quantity
+        self.active = True
+
+    def show(self):
+        return f"{self.name}, Price: {self.price}"
+
+    def buy(self, quantity):
+        if isinstance(quantity, int):
+            total_price = self.price * quantity
+            return total_price
+        else:
+
+            print("This is not an int")
+
+class LimitedProduct(Product):
+    def __init__(self, name, price, quantity, maximum):
+        super().__init__(name, price, quantity)
+        self.maximum = maximum
+        self.active = True
+
+    def show(self):
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Maximum: {self.maximum}"
+
+
+    def buy(self, quantity):
+        if isinstance(quantity, int):
+            if self.quantity < quantity:
+                raise ValueError("There are not enough items to buy")
+            else:
+                if self.maximum < quantity:
+                    return "The purchase cannot be done because exceed the maximum in the order"
+                else:
+                    total_price = self.price * quantity
+                    self.quantity -= quantity
+                    if self.quantity <= 0:
+                        self.deactivate()
+                    return total_price
+        else:
+            return "This is not an int"
