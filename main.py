@@ -4,7 +4,9 @@ import store
 # setup initial stock of inventory
 product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
                  products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                 products.Product("Google Pixel 7", price=500, quantity=250)
+                 products.Product("Google Pixel 7", price=500, quantity=250),
+                 products.NonStockedProduct("Windows License", price=125, quantity=0),
+                 products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                ]
 best_buy = store.Store(product_list)
 
@@ -38,21 +40,17 @@ def start(store_object):
             while keep_order:
                 try:
                     option_order = input("\nWhich product # do you want? ")
-                    qty_order = int(input("What amount do you want? "))
+                    qty_order = input("What amount do you want? ")
                 except ValueError as e:
                     keep_order = False
-                if option_order == "":
+                if option_order == "" and qty_order == "":
                     keep_order = False
                     break
                 index = int(option_order) - 1
-                if qty_order <= products[index].quantity:
-                    shopping_list.append((products[index], qty_order))
-                    print("Item added to list\n")
-                else:
-                    print(f"Sorry, There are just {products[index].quantity} {products[index].name} in inventory")
-
+                shopping_list.append((products[index], int(qty_order)))
+                print("Item added to list\n")
             total_price = best_buy.order(shopping_list)
-            print(f"Order made! total payment {total_price}")
+            print(total_price)
         elif option_number == "4":
             break
         else:
