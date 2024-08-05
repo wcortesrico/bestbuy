@@ -26,16 +26,22 @@ class Store:
 
     def order(self, shopping_list):
         total_price = 0
+        qty_in_range = True
         for product, qty in shopping_list:
-            if product.active:
-                price = product.buy(qty)
-                if isinstance(price, float):
-                    total_price += price
-                    return total_price
-                else:
-                    return price
+            if product.quantity < qty and not isinstance(product, products.NonStockedProduct):
+                qty_in_range = False
+                break
             else:
-                return f"{product}is not active"
+                price = product.buy(qty)
+                if isinstance(price, str):
+                    return price
+                    break
+                else:
+                    total_price += price
+        if qty_in_range:
+            return f"Order made! total payment {total_price}"
+        else:
+            return "Error while making order! Quantity larger than what exists"
 
 
 
