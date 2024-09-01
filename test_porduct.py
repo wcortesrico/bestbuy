@@ -26,7 +26,14 @@ def test_buy_toomuch():
     with pytest.raises(ValueError, match="There are not enough items to buy"):
         ipod.buy(51)
 
-test_create_new_product()
-test_create_product_emptyname()
-test_product_wrongprice()
-test_buy_toomuch()
+def test_maximum():
+    shipping = products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
+    assert shipping.maximum == 1
+
+
+#test_create_new_product()
+#test_create_product_emptyname()
+#test_product_wrongprice()
+#test_buy_toomuch()
+
+test_modifies_quantity()
